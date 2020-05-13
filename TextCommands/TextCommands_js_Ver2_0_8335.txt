@@ -1,0 +1,230 @@
+neuDev.listFunctions()  
+fusionServer
+  fusionServer.addSketchConstraint                 - <Sketch Entity Ref> <Contraint Properties including interfaceId, constraintType, geometries and ParentNode> Creates a new constaint in the passed sketch
+  fusionServer.createInstanceAndComponent          - <Instancing Component> <ComponentName> [<Transform>] Creates and instances a new FusionComponent within a parent one; returns the created instance
+  fusionServer.decodeSketchConstraintType          - <constraintType as integer> Produces a human readable JSON description of a sketch constraint type
+  fusionServer.encodeSketchConstraintType          - <constraintType as list of strings> converts a list of stirngs to a integer sketch constraint type
+  fusionServer.getComponentTSplines                - <Component> Returns the tsplines owned by a fusion component
+  fusionServer.getTSplineBoundingBox               - <TSpline Entity Ref> Returns the bounding box (in JSON) of a given tspline
+  fusionServer.getTSplineTriangles                 - /noNormals <TSpline Entity Ref> [<Quality JSON>] Returns the triangles of a given tspline
+  fusionServer.isSketch                            - <Entity Ref> Returns true if the referenced entity is a Fusion sketch
+  fusionServer.isTSpline                           - <TSpline Entity Ref> Returns true if the referenced entity is a TSpline
+  fusionServer.removeSketchConstraint              - <Sketch Entity Ref> <Constraint Entity Ref> Deletes the specified constraint from the sketch
+neuApplication
+  neuApplication.getActiveEntitlementId            - Provide the entitlement id of the currently active/launched application
+  neuApplication.getEntitlementInfo                - Provide a structure full of information related to currently registered applications and entitlements.
+  neuApplication.getSoftwareVersion                - Get current software version information in a JSON string
+neuDev
+  neuDev.bugAlert                                  - <Condition> [Error Text] A bug alert that checks condition is true. Bug alters works in debug and release builds; failure is considered a serious error!
+  neuDev.getScriptDirectories                      - The script directories
+  neuDev.listFunctions                             - [Name:String Optional partial name of module/function] [/Hidden] Returns JavaScript API functions in Neutron, possibly limited to a single module
+  neuDev.listModules                               - [Name:String Optional partial name of a module] [/Hidden] Returns JavaScript API modules in Neutron
+  neuDev.listTextCommands                          - [/Hidden] [Partial name of SubjectArea] Provides a listing of some or all the text commands
+  neuDev.log                                       - <varibles/strings> print out varibles/strings to the text command window output
+  neuDev.neutronAssert                             - <Condition> Asserts that condition is true using NEUTRON_ASSERT; does nothing in a release build!
+  neuDev.runScript                                 - <fileName:String> run the given JavaScript file
+  neuDev.runTextCommand                            - <Text command string> Parses a text string and runs a text command
+  neuDev.unitTestAssert                            - <Condition> <lineNumber> An unit test assert checks condition is true.
+neuGeometry
+  neuGeometry.addVector3ds                         - <vector1 JSON> <vector2 JSON> vector add result=(vector1 + vector2)
+  neuGeometry.addVector3dToPoint3d                 - <point JSON> <vector JSON> result=(point + vector)
+  neuGeometry.areLine3dsEqual                      - <line1 as JSON> <line2 as JSON> result=(line1 is co-linear to line2)
+  neuGeometry.areMatricesEqual                     - <matrix1 as JSON> <matrix2 as JSON> result=(matrix1 == matrix2)
+  neuGeometry.arePlanesEqual                       - <plane1 as JSON> <plane2 as JSON> result=(plane1 is co-planar to plane2)
+  neuGeometry.arePoint3dsEqual                     - <point1 JSON> <point2 JSON> result=(point1 == point2)
+  neuGeometry.areVector3dsEqual                    - <vector1 JSON> <vector2 JSON> result=(vector1 == vector2)
+  neuGeometry.createLine3d                         - <Properties> Create a line3d from properties startPoint+endPoint or startPoint+vector or x0,y0,z0,x1,y1,z1
+  neuGeometry.createPlane                          - <Properties> Create a plane from properties {pointOnPlane, normal}, {x0,y0,z0,x1,y1,z1} or {a,b,c,d}
+  neuGeometry.crossProduct                         - <vector1 JSON> <vector2 JSON> cross product result=(vector1 x vector2)
+  neuGeometry.dotProduct                           - <vector1 JSON> <vector2 JSON> dot product result=(vector1 . vector2)
+  neuGeometry.getIdentityMatrix                    - Returns the identity matrix
+  neuGeometry.getLine3dProperties                  - <Line3d> Returns the properties of a line3d
+  neuGeometry.getPlaneProperties                   - <Plane> Returns the properties of a plane
+  neuGeometry.getRotationMatrix                    - <RotationAngle> <RotationAxis> [<RotationPoint>] Sets a matrix to perform the specifed rotation
+  neuGeometry.getTranslationMatrix                 - <TranslationVector> Sets a matrix to be a translation by the specified vector
+  neuGeometry.localToWorldLine3d                   - <Local to World Matrix JSON> <Local Line JSON> Converts line geometry from local to world space
+  neuGeometry.localToWorldPlane                    - <Local to World Matrix JSON> <Local plane JSON> Converts plane geometry from local to world space
+  neuGeometry.localToWorldPoint3d                  - <Local to World Matrix JSON> <Local point JSON> Converts point geometry from local to world space
+  neuGeometry.localToWorldVector3d                 - <Local to World Matrix JSON> <Local vector JSON> Converts vector geometry from local to world space
+  neuGeometry.multiplyMatrices                     - <Left Matrix as JSON> <Right Matrix as JSON> Multiplies the 2 matrices
+  neuGeometry.multiplyVector3d                     - <Vector> <double> Multiply a vector by a scalar
+  neuGeometry.popBackMatrix                        - <Local to World Matrix JSON> <Leaf Matrix to Remove> Removes a transform from the leaf (i.e. part or local) end
+  neuGeometry.popFrontMatrix                       - <Local to World Matrix JSON> <Root Matrix to Remove> Removes a transform from the root (i.e. assembly or world) end
+  neuGeometry.pushBackMatrix                       - <Local to World Matrix JSON> <Leaf Matrix to Add> Adds an extra transform at the leaf (i.e. part or local) end
+  neuGeometry.pushFrontMatrix                      - <Local to World Matrix JSON> <Root Matrix to Add> Adds an extra transform at the root (i.e. assembly or world) end
+  neuGeometry.subtractPoint3dFromPoint3d           - <point1 JSON> <point2 JSON> result=(point1 - point2)
+  neuGeometry.subtractVector3dFromVector3d         - <vector1 JSON> <vector2 JSON> vector subtract result=(vector1 - vector2)
+  neuGeometry.worldToLocalLine3d                   - <Local to World Matrix JSON> <World Line JSON> Converts line geometry from world to local space
+  neuGeometry.worldToLocalPlane3d                  - <Local to World Matrix JSON> <World Plane JSON> Converts plane geometry from world to local space
+  neuGeometry.worldToLocalPoint3d                  - <Local to World Matrix JSON> <World Point JSON> Converts point geometry from world to local space
+  neuGeometry.worldToLocalVector3d                 - <Local to World Matrix JSON> <World Vector JSON> Converts vector geometry from world to local space
+neuGrx
+  neuGrx.getCamera                                 - Get the camera of the asset
+  neuGrx.subscribeToCameraPostChange               - <entityRef> <pythonFunction> calls the python function just after the camera is changed. The python function takes a dictionary argument that describes the change.
+  neuGrx.unsubscribeToCameraPostChange             - <entityRef> <pythonFunction> stops calling the python function just before the entity is changed.
+neuIpc
+  neuIpc.dispatchData                              - <type><data>send the input data to the connected client.specify the connection type,1-tcp and 2-web socket
+neuModeling
+  neuModeling.clearBodyOccurrenceProperty          - <OccurrencePath> <Body> <Property to Clear> Sets the occurrence specific properties of a body
+  neuModeling.clearOccurrenceProperty              - <OccurrencePathAsJson> <PropertyName> Clears an occurrence specific property
+  neuModeling.createBodyFromSAT                    - <component:Entity Ref> <fileName:String> import Bodies from Sat file into given component
+  neuModeling.createChild                          - <Parent Entity Ref> <Child Properties> Create a new child object based on dictionary properties (see get_entity_properties)
+  neuModeling.createInstance                       - <Source> <Target> [<Transform>] Creates an instances from the source to target component
+  neuModeling.createSketchPoint                    - <Sketch Entity Ref> <Point3D> Creates a new sketch point at the desired location for the passed sketch; this function should be used for center-points (because they aren't shared) not end-points
+  neuModeling.deleteChild                          - <Parent Entity Ref> <Child Entity Ref> Deletes the specified child of the entity ref
+  neuModeling.evaluateExpression                   - <Expression> [ExpectedUnits] [/UnitSystem] [/Id] Evaluates the passed expression
+  neuModeling.exportBodyAsSAT                      - <body:Entity Ref> <fileName:String>[versionNumber:Int default = 7][scaleFactor:Double default = 1] Export the given Body to a Sat file
+  neuModeling.findOrCreateSketchPoint              - <Sketch Entity Ref> <Point3D> Finds a sharable sketch point or makes a new sketch point at the desired location for the passed sketch; this function should be used for end-points (because they are shared) not center points
+  neuModeling.formatValue                          - <Value> [ExpectedUnits] [/UnitSystem] [/Id] Formats the passed expression
+  neuModeling.getBodyBoundingBox                   - <Body Entity Ref> Returns the bounding box (in JSON) of a given body
+  neuModeling.getBodyOccurrenceProperties          - [/occSpecificOnly] <OccurrencePath> <Body> Gets the properties of a body occurrence; these can be restricted to only those appropriate to the body occurrence (instead of including properties coming from elsewhere - e.g. the component)
+  neuModeling.getBodyOccurrencesFromComponent      - [/NoOverrides] [Component] Gets the body occurrences organized by target component. The occurrences are those reachable from the passed component (which defaults to the root component for the current asset)
+  neuModeling.getBodyTriangles                     - /noNormals /noUVCoords <Body Entity Ref> [Quality JSON] Returns the triangles of a given body
+  neuModeling.getChild                             - <Entity Ref> <index> Returns the specified child of the entity ref
+  neuModeling.getChildCount                        - <Entity Ref> Returns the number of children of the entity ref
+  neuModeling.getComponentBodies                   - [<Component>] Returns the bodies owned by a component, defaults to the root component
+  neuModeling.getComponentInstances                - Gets the instances of the passed component, without applying any overrides
+  neuModeling.getComponentObjectChildren           - <Component Object> Returns the children of the passed component object - can be NULL when the passed object is itself a component
+  neuModeling.getComponentObjectComponent          - <Component Object> Returns the owning component of the passed component object - can be itself when the passed object is itself a component
+  neuModeling.getComponentObjectDescendents        - <Component Object> <InterfaceId> Returns the descendents of a component object, optionally restricted to those that implement an interface
+  neuModeling.getComponentObjectOccurrencesFromComponent - [/NoOverrides] <InterfaceId> [Component] Gets the occurrences of component objects of a particular type, organized by component object. The occurrences are those reachable from the passed component (which defaults to the root component for the current asset)
+  neuModeling.getComponentObjectParent             - <Component Object> Returns the parent of the passed component object - can be NULL when the passed object is itself a component
+  neuModeling.getComponentOccurrencesFromComponent - [/NoOverrides] [Component] Gets the occurrences organized by target component. The occurrences are those reachable from the passed component (which defaults to the root component for the current asset)
+  neuModeling.getComponentsFromComponent           - [/NoOverrides] [Component] Gets the components reachable from the passed component (and includes that component), which defaults to the root component for the current asset
+  neuModeling.getInstanceSource                    - <Instance> Returns the component that owns the instance
+  neuModeling.getInstanceTarget                    - <Instance> Returns the target component of the instance
+  neuModeling.getMaterialProperties                - <Material Dictionary> Returns the protein properties of a physical or visual material - expensive for a visual material
+  neuModeling.getMaterialUserName                  - <Material Dictionary> Returns the end user name for a physical or visual material
+  neuModeling.getOccurrenceBackInstance            - <OccurrencePathAsJson> Gets the instance at the back of the occurrence path - the leaf instance
+  neuModeling.getOccurrenceLength                  - <OccurrencePathAsJson> Gets the length (number of instances) in the occurrence path
+  neuModeling.getOccurrenceProperties              - [occSpecificOnly] <OccurrencePathAsJson> Returns the properties of passed occurrence
+  neuModeling.getOccurrencesFromComponent          - [/NoOverrides] [Component] Gets the occurrences reachable from the passed component (which defaults to the root component for the current asset)
+  neuModeling.getOccurrencesOfBody                 - [/NoOverrides] <Body> [Start Component]  Gets the occurrences of the specified body inside the start component - this defaults to the root component for the current asset
+  neuModeling.getOccurrencesOfComponent            - [/NoOverrides] <Component> [Start Component]  Gets the occurrences of the specified component inside the start component - this defaults to the root component for the current asset
+  neuModeling.getOccurrencesOfComponentObject      - [/NoOverrides] <Component Object> [Start Component]  Gets the occurrences of the specified component object inside the start component - this defaults to the root component for the current asset
+  neuModeling.getOccurrenceSource                  - <OccurrencePathAsJson> Returns the source component of the occurrence path
+  neuModeling.getOccurrenceTarget                  - <OccurrencePathAsJson> Returns the target component of the occurrence path
+  neuModeling.getOccurrenceTransform               - <OccurrencePathAsJson> Returns the transform of the occurrence path
+  neuModeling.getParent                            - <Entity Ref>Returns the parent of the entity ref
+  neuModeling.getRootComponent                     - Gets the active root component
+  neuModeling.getRootOccurrence                    - Creates a occurrence path for the root component. This is zero length and is useful to traverse the instancing structure
+  neuModeling.isBody                               - <Body Entity Ref> Returns true if the entity ref is a body
+  neuModeling.isChildOf                            - <Parent Entity Ref> <Child Candidate Entity Ref> Is the second parameter a child of the first one
+  neuModeling.isComponent                          - <Component Entity Ref> Returns true if the referenced entity is a component
+  neuModeling.isComponentObject                    - <Component Object Candidate> Returns whether the passed object is a component object (i.e. an object that makes up a component, like a sketch or tspline)
+  neuModeling.isInstance                           - <Instance Entity Ref> Returns true if the referenced entity is an instance
+  neuModeling.isOccurrence                         - <occurrence dictionary> Returns true if the passed dictionary is a valid occurrence
+  neuModeling.isParentObject                       - <Entity Ref> Returns true if the referenced entity has children that can be operated upon
+  neuModeling.isSketch                             - <Sketch Candidate Entity Ref> Returns true if the passed entity is a sketch
+  neuModeling.occurrencePopBackInstance            - <OccurrencePathAsJson> Removes the instance from the back of the occurrence path (i.e. the leaf instance)
+  neuModeling.occurrencePushBackInstance           -  <OccurrencePathAsJson> <InstanceRef> Pushes the instance to the back of the transform
+  neuModeling.setBodyOccurrenceProperties          - <OccurrencePath> <Body> <Dictionary Of Properties> Sets the occurrence specific properties of a body
+  neuModeling.setOccurrenceProperties              - <OccurrencePathAsJson> <OccurrencePropertiesAsJSON> Updates the occurrence specific properties of passed occurrence
+neuServer
+  neuServer.abortTransaction                       - Abort transaction
+  neuServer.addEntityCustomProperties              - <EntityRef> <Custom_Properties_JSON> Adds custom properties to given entity
+  neuServer.addRoot                                - <entityRef> <rootId> Add the entity as a root with the passed id in its segment
+  neuServer.clearCurrentAsset                      - Clears the current asset and returns the previously active one (so you can restore it if it is non zero
+  neuServer.clearCurrentDocument                   - Clears the current document and returns the previously active one (so you can restore it if it is non zero
+  neuServer.clearCurrentSegment                    - Clears the current segment and returns the previously active one (so you can restore it if it is non zero
+  neuServer.closeAllDocuments                      - Close current all opened documents in program
+  neuServer.closeDocument                          - [sessionWideId] Closes the document with sessionWideId or the active one
+  neuServer.commitTransaction                      - Commit transaction
+  neuServer.createAsset                            - <AssetTypeId> [<DocumentPath>] [/Hidden] Creates a new asset inside the given or active document
+  neuServer.createExtensibilityEntity              - Create an extensibility entity in current active segment
+  neuServer.createTransientSegment                 - <ID:String> creates a standalone transient segment
+  neuServer.deleteTransientSegment                 - <ID:String> deletes a standalone transient segment
+  neuServer.entitiesOfAnyInterface                 - <List of Entity Refs> <List of InterfaceIds> Returns a list of entities which support any of the given interfaces.
+  neuServer.entitiesOfInterface                    - <List of Entity Refs> <InterfaceId> Returns a list of entities which support the given interface
+  neuServer.export                                 - <filename> Export the active asset as *.sat, *.step or other translator supported file types.
+  neuServer.getAssetProperties                     - [sessionWideId] [/limited {/propertyKeys}] get the properties of the asset with sessionWideId or the active one
+  neuServer.getCurrentAsset                        - Returns a SessionWideID for the current asset
+  neuServer.getCurrentDocument                     - Returns a SessionWideID for the current document
+  neuServer.getCurrentSegment                      - Returns a SessionWideID for the current segment
+  neuServer.getDocumentID                          - <path> returns the session wide ID of the document with the passed path
+  neuServer.getDocumentProperties                  - [sessionWideId] [/limited {/propertyKeys}]  get the properties of the document with sessionWideId or the latest one
+  neuServer.getDocuments                           - Returns a list of all the document sessionWideIds
+  neuServer.getEntities                            - Gets a list of the entityIds for the active asset using JSON
+  neuServer.getEntityId                            - <EntityRef> Returns the entity ID
+  neuServer.getEntityInterfaces                    - <EntityRef> Returns a list of interfaces the entity directly supports; the order is the entity's interface, then the base class's interface and then the other interfaces the entity supports.
+  neuServer.getEntityProperties                    - [/limited {/limitedPropertyId}] [/followRefs] [/skipNulls] [/customOnly] [/noCustom] <EntityRef> Returns all or selected properties of the entity as JSON
+  neuServer.getEntitySegment                       - <EntityRef> Returns entity's segment segmentSessionWideID
+  neuServer.getOptions                             - [/dirty] [/nondefault] [/full] [/dynamicSettings] Show either all or the dirty (need to be writen to disk) or non-default (the value isn't the default) options; if /full is used a lot of info is output
+  neuServer.getPaths                               - Get all the paths used by Neutron
+  neuServer.getRootEntities                        - Gets a list of the root entities for the active asset
+  neuServer.getRootIds                             - Gets a list of the root ids for the active asset
+  neuServer.getSegmentProperties                   - [sessionWideID] [/limited {/propertyKeys}] get the properities of the segment with the given session wide Id or the active one
+  neuServer.getSubInterfaces                       - <InterfaceId> Returns a list of sub-interfaces the interface directly supports, starting with the base class's interface. Does not include the passed interface.
+  neuServer.getUserLanguage                        - Get the user language setting
+  neuServer.getUserName                            - <entity_ref> the user name from an entity that supports user name
+  neuServer.isEntityOfAnyInterface                 - <EntityRef> <List of InterfaceIds> Is the entity type equal to or derived from any of given interfaces.
+  neuServer.isEntityOfInterface                    - <EntityRef> <InterfaceId> Is the entity type equal to or derived from the given interface
+  neuServer.isOfInterface                          - <BaseInterfaceId> <TestInterfaceId> Is the test interface equals to the base interface or derived from it
+  neuServer.newDocument                            - <AssetTypeId> Creates a document with an active asset of the passed type and activates a view on that asset
+  neuServer.openDocument                           - <filename> [/NoUI /NoGraphics /NoChangeMRU] Opens a document and activates a view on its active asset
+  neuServer.redoTransaction                        - Redo transaction
+  neuServer.removeEntityCustomProperties           - <EntityRef> <Custom_Property_Names_JSON> Removes the specified custom properties from given entity
+  neuServer.removeExtensibilityEntity              - <Entity Ref>Remove given extensibility entity
+  neuServer.removeRoot                             - <Entity Ref> Remove the specified entity as a root of its segment
+  neuServer.rename                                 - <entity_ref> <new_name> renames an entity that supports rename, making the name unique if needed
+  neuServer.saveDocument                           - [path] [sessionWideId] Saves a document matching sessionWideId or the latest one
+  neuServer.saveOptions                            - Save all the dirty options to disk
+  neuServer.setAssetProperties                     - <properties: JSON> [sessionWideID] set the properties of the asset with sessionWideId or the active one
+  neuServer.setCurrentAsset                        - <SessionWideID> Sets an asset as the current asset and returns the previously active one (so you can restore it if it is non zero
+  neuServer.setCurrentDocument                     - <SessionWideID> Sets an document as the current document and returns the previously active one (so you can restore it if it is non zero
+  neuServer.setCurrentSegment                      - <SessionWideID> Sets a segment as the current segment and returns the previously active one (so you can restore it if it is non zero
+  neuServer.setDocumentProperties                  - <properties: JSON> [sessionWideID] set the properties of the document with sessionWideId or the latest one
+  neuServer.setEntityProperties                    - <EntityRef> <JSON> Updates the properties of the entity using JSON
+  neuServer.setOptions                             - <dictionary> - Sets all the options in the dictionary and returns the number of options saved
+  neuServer.startTransaction                       - <UserName> Start a transaction with specified user name
+  neuServer.subscribeToEntityPostChange            - <entityRef> <pythonFunction> calls the python function just after the entity has changed. The python function takes a dictionary argument that describes the change.
+  neuServer.subscribeToEntityPreChange             - <entityRef> <pythonFunction> calls the python function just before the entity is changed. The python function takes a dictionary argument that describes the change.
+  neuServer.subscribeToEntityPreDeletion           - <entityRef> <pythonFunction> calls the python function just before the entity is deleted.  The python function takes a dictionary argument that describes the change.
+  neuServer.supportsRename                         - <entity_ref> returns whether the entity supports rename (i.e. implements Ns::DataModel::IRenameTarget and canRename returns true)
+  neuServer.supportsUserName                       - <entity_ref> returns whether the entity supports a user name (i.e. implements Ns::DataModel::IUserName or Ns::DataModel::IRenameTarget)
+  neuServer.undoTransaction                        - Undo transaction
+  neuServer.unsubscribeToEntityPostChange          - <entityRef> <pythonFunction> stops calling the python function just after the entity has changed.
+  neuServer.unsubscribeToEntityPreChange           - <entityRef> <pythonFunction> stops calling the python function just before the entity is changed.
+  neuServer.unsubscribeToEntityPreDeletion         - <entityRef> <pythonFunction> stops calling the python function just before the entity is deleted.
+neuUI
+  neuUI.addCommandToToolbar                        - <JSON> Adds a command to toolbar
+  neuUI.addSelection                               - <JSON for selection> Adds the selection to the selection set for the current asset
+  neuUI.addSelectionToInput                        - <JSON for selection> Add the selection to the selection input of the current active command
+  neuUI.addTooltipInfoToCommand                    - <JSON> Adds special tooltip info to a command
+  neuUI.clearSelections                            - Clears the selection set of the current asset
+  neuUI.createCommand                              - <JSON> Creates a command that can be run via a python script
+  neuUI.createPanel                                - <JSON> Creates a panel and adds it to a command toolbar.
+  neuUI.createWorkspace                            - <JSON> Creates a workspace.
+  neuUI.deleteCommand                              - <commandId> Deletes a previously created command that can be run via a python script
+  neuUI.deletePanel                                - <JSON> Remove a panel from a command toolbar, and then delete the panel itself.
+  neuUI.deleteWorkspace                            - <Workspace ID> Remove a workspace from a command toolbar, and then delete the workspace itself.
+  neuUI.disableCommandInput                        - <input id: String> Disable the given input in the active command
+  neuUI.docSnapshot                                - [/TransparentBackground][/DisableAntiAliasing][/EncodedString][/Opaque][/AdjustSize] Set the camera properties and image size
+  neuUI.emulateModalCommandCialog                  - <Command JSON with id, name, inputs> Presents a command dialog almost modally and returns if it is inprogress, ok or cancel; call neu_dev.retry_script_when_idle on the first case
+  neuUI.enableCommandInput                         - <input id: String> Enable the given input in the active command
+  neuUI.executeJS                                  - Execute custom javascript on frame
+  neuUI.getCurrentCommandInfo                      - Shows info on the ActiveCommand and its inputs
+  neuUI.getCurrentCommandToolbarInfo               - returns the current command toolbar info as JSON. This allows a developer to know where to add his command to
+  neuUI.getInitialScale                            - Get the initial scale such that 4 views are guaranteed to fit
+  neuUI.getSelectionFilters                        - Returns a list of all the selection filters that can be used in 'filters' property of select command inputs
+  neuUI.getSelectionInfo                           - Returns the available geometric info for the selection in local space or world space. At most 'hitPoint', 'nominalHitPoint', 'point', 'plane', 'line', 'normal' will be returned. The returned info can be limited by flags.
+  neuUI.getSelections                              - Gets the selections in the current assets selection set
+  neuUI.getToolbarInfo                             - <toolbarId> returns the current toolbar info as JSON. This allows a developer to know where to add his command to
+  neuUI.listAllToolbars                            - Lists all toolbars' ids.
+  neuUI.readfile                                   - Read and encode a local file
+  neuUI.removeCommandFromToolbar                   - <CommandId> <ToolbarId> Removes a command from toolbar
+  neuUI.removeSelections                           - <JSON for selection> Removes the selection from the selection set for the current asset
+  neuUI.repaint                                    - Forces an immediate repaint
+  neuUI.requeryManipulatorPlacementData            - <input id: String> Requery the mainputator palcement data of the given input in the active command
+  neuUI.setSelections                              - <JSON for Selections as list> Sets the selections for the current asset to the passed json list
+  neuUI.showMessageBox                             - [Parameters as JSON] Displays a potentially complex message box to the user using JSON
+  neuUI.showSimpleMessageBox                       - [/Error] [/Warning] [Text] Displays a simple informational message box to the user - useful for debugging Python
+  neuUI.showTraceMessage                           - [Text] Displays a trace message in the debugger - useful for debugging Python
+  neuUI.snapshot                                   - [/TransparentBackground][/DisableAntiAliasing][/EncodedString]Set the camera properties and image size
+  neuUI.subscribeToWorkspaceActivate               - <workspaceId> <pythonFunction> calls the python function when the workspace gets activated.
+  neuUI.subscribeToWorkspaceDeactivate             - <workspaceId> <pythonFunction> calls the python function when the workspace gets deactivate.
+  neuUI.subscribeToWorkspaceIsApplicable           - <workspaceId> <pythonFunction> calls the python function when the application asks if the workspace is applicable. The python function takes a JSON argument that describes current asset type.
+  neuUI.unsubscribeToWorkspaceActivate             - <workspaceId> <pythonFunction> stops calling the python function when the workspace gets activated.
+  neuUI.unsubscribeToWorkspaceDeactivate           - <workspaceId> <pythonFunction> stops calling the python function when workspace gets deactivated.
+  neuUI.unsubscribeToWorkspaceIsApplicable         - <workspaceId> <pythonFunction> stops calling the python function when the application asks if the workspace is applicable.
+  neuUI.writefile                                  - Decode and write a local file
