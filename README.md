@@ -9,7 +9,8 @@ Fusion360用のスクリプト・アドインです。
 + UVviewer(Script) : マウスカーソル位置のUVラインを描き、パラメータを表示します。
 + GetObjectioninfo(Script) : 選択した要素のAPI的情報(オブジェクト名等)を表示します。
 + TextCommands(Script) : APIからapp.executeTextCommandメソッドで利用するための
-TextCommandsリスト
+TextCommandsリスト。
++ CommandLogger(Addin) : GUIで操作を行った "コマンド名/コマンドID" をテキストコマンドパネルに垂れ流す。
 
 ### アクション:
 以下の環境で確認しています。
