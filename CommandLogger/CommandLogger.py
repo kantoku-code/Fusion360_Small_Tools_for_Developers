@@ -7,7 +7,7 @@ _ui = adsk.core.UserInterface.cast(None)
 _cmdDefs = adsk.core.CommandDefinitions.cast(None)
 _handlers =[]
 
-class CommandTerminatedHandler(adsk.core.ApplicationCommandEventHandler):
+class CommandLoggerHandler(adsk.core.ApplicationCommandEventHandler):
     def __init__(self):
         super().__init__()
     def notify(self, args):
@@ -33,9 +33,9 @@ def run(context):
         _ui = app.userInterface
         _cmdDefs = _ui.commandDefinitions
 
-        onCommandTerminated = CommandTerminatedHandler()
-        _ui.commandTerminated.add(onCommandTerminated)
-        _handlers.append(onCommandTerminated)
+        onCommandLogger = CommandLoggerHandler()
+        _ui.commandStarting.add(onCommandLogger)
+        _handlers.append(onCommandLogger)
 
         app.executeTextCommand(u'Commands.Start ShowTextCommandsCommand')
 
