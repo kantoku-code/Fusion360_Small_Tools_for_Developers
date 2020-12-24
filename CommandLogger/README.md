@@ -9,12 +9,19 @@ Please follow the instructions [here](https://knowledge.autodesk.com/support/fus
 
 ## Usage
 + Launch the add-in.
-+ Each time the command is used "Command name : Command ID" appears in the TextCommands palette.
++ A command button will be added to the "ADD-INS" panel.
+![Alt text](./resources/readme/panel.png)
++ Press the button to display the dialog.
++ "Show Command Logging" should be checked.Each time the command is used "Command name: command ID" appears in the TextCommands palette.
+![Alt text](./resources/readme/dialog.png)
+  + Check "Show Panel Information" to also show the panel information containing the command to be executed. This should be useful for add-in developers.
+
+  + This is looking for the CommandDefinitionID registered in the panel, not the actual panel information that was executed. Therefore, the information may not be accurate.
 
 
 ## Action:
 Confirmed in the following environment.
-+ Fusion360 Ver2.0.9313
++ Fusion360 Ver2.0.9512
 + Windows10 64bit Pro , Home
 
 ## License:
