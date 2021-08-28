@@ -144,16 +144,6 @@ class CommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
 
 
 class DrawUVFactry():
-    _vp = adsk.core.Viewport.cast(None)
-    _face = adsk.fusion.BRepFace.cast(None)
-    _clone = adsk.fusion.BRepFace.cast(None)
-    _musPos = adsk.core.Point2D.cast(None)
-    _cgGroup = adsk.fusion.CustomGraphicsGroup.cast(None)
-
-    red = adsk.core.Color.create(255, 0, 0, 255)
-    _solidRed = adsk.fusion.CustomGraphicsSolidColorEffect.create(red)
-    blue = adsk.core.Color.create(0, 0, 255, 255)
-    _solidBlue = adsk.fusion.CustomGraphicsSolidColorEffect.create(blue)
 
     def __init__(self):
         self.refreshCG()
