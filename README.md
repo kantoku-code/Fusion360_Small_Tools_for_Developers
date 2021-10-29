@@ -10,11 +10,12 @@ Fusion360用のスクリプト・アドインです。
 + GetObjectioninfo(Script) : 選択した要素のAPI的情報(オブジェクト名等)を表示します。
 + TextCommands(Script) : APIからapp.executeTextCommandメソッドで利用するための
 TextCommandsリスト。
-+ CommandLogger(Addin) : GUIで操作を行った "コマンド名/コマンドID" をテキストコマンドパレットに垂れ流す。
++ CommandLogger(Addin) : Developers_Small_ToolKitに機能を移行しています。
++ Developers_Small_ToolKit(Addin) : 開発者向けの小さな工具箱。
 
 ### アクション:
 以下の環境で確認しています。
- + Fusion360 Ver2.0.9313
+ + Fusion360 Ver2.0.11415
  + Windows10 64bit Pro , Home
 
 ### ライセンス:
