@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+    <title>Command Logger</title>
+  </head>
+
+  <body>
+    <!-- https://getbootstrap.jp/docs/5.0/layout/gutters/ -->
+    <div class="container">
+      <div class="row g-1">
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- close all docs -->
+            <button class="btn btn-outline-secondary btn-sm" type="button" id="closeDocs" onclick="closeDocs()">
+              Close all docs
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- remove Custom Graphics -->
+            <button class="btn btn-outline-secondary btn-sm" type="button" id="closeDocs" onclick="removeCG()">
+              Remove Custom Graphics
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- command log -->
+            <div class="form-check form-switch">
+              <input class="form-check-input btn-outline-secondary" type="checkbox" id="cmdLog" onchange="commandLog()">
+              <label class="form-check-label btn-outline-secondary" for="cmdLog">Command Logging</label>
+            </div>
+
+            <!-- panel info -->
+            <div class="form-check form-switch" id="pnlInfoSet" hidden="false">
+              <input class="form-check-input btn-outline-secondary" type="checkbox" id="pnlInfo" onchange="panelInfo()">
+              <label class="form-check-label btn-outline-secondary" for="pnlInfo">Panel Information</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- Window  -->
+            <button class="btn btn-outline-secondary btn-sm" type="button" onclick="windowClear()">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- Dump CommandDialog Info -->
+            <button class="btn btn-outline-secondary btn-sm" type="button" onclick="dumpCommandDialog()">
+              Dump CommandDialog Info
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- Dump Entity Paths -->
+            <button class="btn btn-outline-secondary btn-sm" type="button" onclick="dumpEntityPaths()">
+              Dump Entity Paths
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- Dump Active Command Resource Folder -->
+            <button class="btn btn-outline-secondary btn-sm" type="button" onclick="dumpResourceFolder()">
+              Dump Active Command Resource Folder
+            </button>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- JavaScriptを使用する場合 -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js" integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl" crossorigin="anonymous"></script>
+
+  </body>
+
+  <script>
+  
+    // command log
+    function commandLog() {
+      let elmCmdLog = document.getElementById("cmdLog")
+      let elmPnlInfo = document.getElementById("pnlInfoSet")
+
+      if (elmCmdLog.checked) {
+        elmPnlInfo.hidden = false
+      } else {
+        elmPnlInfo.hidden = true
+      }
+
+      let args = {
+          value: elmCmdLog.checked
+        }
+      adsk.fusionSendData("cmdLog", JSON.stringify(args))
+    }
+
+    // panel info
+    function panelInfo() {
+      let elmPnlInfo = document.getElementById("pnlInfo")
+
+      let args = {
+          value: elmPnlInfo.checked
+        }
+      adsk.fusionSendData("panelInfo", JSON.stringify(args))
+    }
+
+    // close all docs
+    function closeDocs() {
+      let args = {
+          value: true
+        }
+      adsk.fusionSendData("closeDocs", JSON.stringify(args))
+    }
+
+    // TextCommands Pallet Clear
+    function windowClear() {
+      let args = {
+          value: true
+        }
+      adsk.fusionSendData("windowClear", JSON.stringify(args))
+    }
+
+    // Dump CommandDialog Info
+    function dumpCommandDialog() {
+      let args = {
+          value: true
+        }
+      adsk.fusionSendData("dumpCommandDialog", JSON.stringify(args))
+    }
+
+    // Dump Entity Paths
+    function dumpEntityPaths() {
+      let args = {
+          value: true
+        }
+      adsk.fusionSendData("dumpEntityPaths", JSON.stringify(args))
+    }
+
+    // Dump Active Command Resource Folder
+    function dumpResourceFolder() {
+      let args = {
+          value: true
+        }
+      adsk.fusionSendData("resourceFolder", JSON.stringify(args))
+    }
+
+    // Remove Custom Graphics
+    function removeCG() {
+      let args = {
+          value: true
+        }
+      adsk.fusionSendData("removeCG", JSON.stringify(args))
+    }
+  </script>
+</html>
