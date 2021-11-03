@@ -8,7 +8,7 @@ import math
 handlers = []
 _app: adsk.core.Application = None
 _ui: adsk.core.UserInterface = None
-_handlers =[]
+_handlers = []
 
 _cmdInfo = {
     'id': 'Developers_Small_ToolKit_Cmd',
@@ -24,41 +24,43 @@ _paletteInfo = {
     'isVisible': True,
     'showCloseButton': True,
     'isResizable': True,
-    'width': 300,
-    'height': 350,
-    'useNewWebBrowser': False, #True,#
+    'width': 280,
+    'height': 250,
+    'useNewWebBrowser': False,  # True,#
     'dockingState': None
     # 'dockingState': adsk.core.PaletteDockingStates.PaletteDockStateRight
 }
 
 # commandLog group
 _cmdLogInfo = {
-    'id' : 'logging',
-    'name' : 'Show Command Logging',
-    'obj' : adsk.core.GroupCommandInput.cast(None),
-    'handler' : None
+    'id': 'logging',
+    'name': 'Show Command Logging',
+    'obj': adsk.core.GroupCommandInput.cast(None),
+    'handler': None
 }
 
 # commandLog Panel info
 _cmdPanelInfo = {
-    'id' : 'panelInfo',
-    'name' : 'Show Panel Information',
-    'value' : False,
-    'obj' : adsk.core.BoolValueCommandInput.cast(None)
+    'id': 'panelInfo',
+    'name': 'Show Panel Information',
+    'value': False,
+    'obj': adsk.core.BoolValueCommandInput.cast(None)
 }
+
 
 class CommandStartingHandler(adsk.core.ApplicationCommandEventHandler):
     def __init__(self):
         super().__init__()
+
     def notify(self, args):
         try:
             # command
             global _app, _ui
             cmdDefs: adsk.core.CommandDefinitions = _ui.commandDefinitions
 
-            cmdId :str = args.commandId
-            cmdDef :adsk.core.CommandDefinition =  cmdDefs.itemById(cmdId)
-            cmdName :str = cmdDef.name if cmdDef else '(unknown)'
+            cmdId: str = args.commandId
+            cmdDef: adsk.core.CommandDefinition = cmdDefs.itemById(cmdId)
+            cmdName: str = cmdDef.name if cmdDef else '(unknown)'
 
             _app.log('{} : {}'.format(cmdName, cmdId))
 
@@ -67,12 +69,12 @@ class CommandStartingHandler(adsk.core.ApplicationCommandEventHandler):
             if _cmdPanelInfo['value']:
                 # workspace
                 try:
-                    ws :adsk.core.Workspace = _ui.activeWorkspace
+                    ws: adsk.core.Workspace = _ui.activeWorkspace
                 except:
                     return
 
                 # Toolbar panel
-                panelId :str = ''
+                panelId: str = ''
                 try:
                     actEditObj = adsk.fusion.Sketch.cast(_app.activeEditObject)
                     if actEditObj:
@@ -94,7 +96,7 @@ class CommandStartingHandler(adsk.core.ApplicationCommandEventHandler):
                     tpLst = _ui.toolbarPanelsByProductType(ws.productType)
 
                 for tp in tpLst:
-                    tc :adsk.core.ToolbarControl = tp.controls.itemById(cmdId)
+                    tc: adsk.core.ToolbarControl = tp.controls.itemById(cmdId)
                     if tc:
                         panelId = tp.id
                         break
@@ -110,21 +112,21 @@ class CommandStartingHandler(adsk.core.ApplicationCommandEventHandler):
                 # Toolbar tab
                 tabId = ''
                 if len(panelId) < 1:
-                    panelId = tabId ='(unknown)'
+                    panelId = tabId = '(unknown)'
                 else:
                     ttLst = _ui.toolbarTabsByProductType(ws.productType)
                     for tt in ttLst:
                         try:
-                            tp  = tt.toolbarPanels.itemById(panelId)
+                            tp = tt.toolbarPanels.itemById(panelId)
                         except:
                             continue
-                        
+
                         if tp:
                             tabId = tt.id
                             break
-                
+
                     if len(tabId) < 1:
-                        tabId ='(unknown)'
+                        tabId = '(unknown)'
 
                 _app.log(' Workspace_ID:{}\n  Tab_ID:{}\n  Panel_ID:{}'.format(
                     ws.id, tabId, panelId))
@@ -196,17 +198,19 @@ class MyHTMLEventHandler(adsk.core.HTMLEventHandler):
 
 def removeCG():
     global _app, _ui
-    des :adsk.fusion.Design = _app.activeProduct
+    des: adsk.fusion.Design = _app.activeProduct
     cgs = [cmp.customGraphicsGroups for cmp in des.allComponents]
     cgs = [cg for cg in cgs if cg.count > 0]
-    
-    if len(cgs) < 1: return
+
+    if len(cgs) < 1:
+        return
 
     for cg in cgs:
         gps = [c for c in cg]
         gps.reverse()
         for gp in gps:
             gp.deleteMe()
+
 
 def dumpResourceFolder():
     global _app, _ui
@@ -217,6 +221,7 @@ def dumpResourceFolder():
         except:
             pass
 
+
 def dumpEntityPaths():
     global _app
     try:
@@ -225,20 +230,23 @@ def dumpEntityPaths():
     except:
         pass
 
+
 def dumpCommandDialog():
     global _app
     res = _app.executeTextCommand(u'Toolkit.cmdDialog')
     _app.log(res)
+
 
 def windowClear():
     global _app
     res = _app.executeTextCommand(u'window.Clear')
     _app.log(res)
 
+
 def closeAllDocs():
     global _app, _ui
     docs = [doc for doc in _app.documents]
-    msg =[
+    msg = [
         f'The number of open documents is {len(docs)}.',
         'Would you like me to close them all without saving them?'
     ]
@@ -254,10 +262,10 @@ def closeAllDocs():
     [doc.close(False) for doc in docs[::-1]]
 
 
-
 class ShowPaletteCommandExecuteHandler(adsk.core.CommandEventHandler):
     def __init__(self):
         super().__init__()
+
     def notify(self, args):
         try:
             global _ui, _paletteInfo
@@ -292,12 +300,14 @@ class ShowPaletteCommandExecuteHandler(adsk.core.CommandEventHandler):
             handlers.append(onClosed)
 
         except:
-            _ui.messageBox('Command executed failed: {}'.format(traceback.format_exc()))
+            _ui.messageBox('Command executed failed: {}'.format(
+                traceback.format_exc()))
 
 
 class MyCloseEventHandler(adsk.core.UserInterfaceGeneralEventHandler):
     def __init__(self):
         super().__init__()
+
     def notify(self, args):
         try:
             global _app
@@ -314,6 +324,7 @@ class MyCloseEventHandler(adsk.core.UserInterfaceGeneralEventHandler):
 class ShowPaletteCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
     def __init__(self):
         super().__init__()
+
     def notify(self, args):
         try:
             command = args.command
@@ -328,8 +339,8 @@ def run(context):
     try:
         global _ui, _app
         _app = adsk.core.Application.get()
-        _ui  = _app.userInterface
-        
+        _ui = _app.userInterface
+
         global _cmdInfo
         showPaletteCmdDef = _ui.commandDefinitions.itemById(_cmdInfo['id'])
         if showPaletteCmdDef:
@@ -345,7 +356,7 @@ def run(context):
         onCommandCreated = ShowPaletteCommandCreatedHandler()
         showPaletteCmdDef.commandCreated.add(onCommandCreated)
         handlers.append(onCommandCreated)
-        
+
         panel = _ui.allToolbarPanels.itemById('SolidScriptsAddinsPanel')
         cntrl = panel.controls.itemById('showPalette')
         if not cntrl:
