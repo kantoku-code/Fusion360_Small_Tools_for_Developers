@@ -24,7 +24,6 @@
             data-bs-toggle="tooltip" data-bs-placement="top" title="Close All Docs" onclick="closeDocs()">
             <i class="bi bi-door-closed"></i>
           </button>
-
           <!-- remove Custom Graphics -->
           <button class="btn btn-outline-secondary btn-sm customBtn" type="button" id="closeDocs"
             data-bs-toggle="tooltip" data-bs-placement="top" title="Remove Custom Graphics" onclick="removeCG()">
@@ -67,15 +66,40 @@
             data-bs-placement="top" title="Dump Entity Paths" onclick="dumpEntityPaths()">
             <i class="bi bi-pencil-fill"></i>
           </button>
+       
         </div>
       </div>
 
       <div class="col-12">
         <div class="p-1 border bg-light">
-          <!-- Dump Active Command Resource Folder -->
+          <!-- Open Cache Folder -->
           <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="Dump Active Command Resource Folder" onclick="dumpResourceFolder()">
-            <i class="bi bi-pencil"></i>
+            data-bs-placement="top" title="Open Cache Folder" onclick="openCache()">
+            <i class="bi bi-bag"></i>
+          </button>
+
+          <!-- Open UserDirectory -->
+          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
+            data-bs-placement="top" title="Open User Directory" onclick="openUserDirectory()">
+            <i class="bi bi-person-fill"></i>
+          </button>
+
+          <!-- Open Active Command Resource Folder -->
+          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
+            data-bs-placement="top" title="Open Active Command Resource Folder" onclick="openResourceFolder()">
+            <i class="bi bi-command"></i>
+          </button>
+          |
+          <!-- Open CustomPost Folder -->
+          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
+            data-bs-placement="top" title="Open CustomPost Folder" onclick="openCustomPostFolder()">
+            <i class="bi bi-gear"></i>
+          </button>
+
+          <!-- Open InstallPost Folder -->
+          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
+            data-bs-placement="top" title="Open InstallPost Folder" onclick="openInstallPostFolder()">
+            <i class="bi bi-gear-fill"></i>
           </button>
         </div>
       </div>
@@ -92,6 +116,38 @@
 </body>
 
 <script>
+
+  // Open Cache Folder
+  function openCache() {
+    let args = {
+      value: true
+    }
+    adsk.fusionSendData("openCache", JSON.stringify(args))
+  }
+
+  // Open UserDirector
+  function openUserDirectory() {
+    let args = {
+      value: true
+    }
+    adsk.fusionSendData("openUserDirectory", JSON.stringify(args))
+  }
+
+  // Open InstallPost Folder
+  function openInstallPostFolder() {
+    let args = {
+      value: true
+    }
+    adsk.fusionSendData("openInstallPostFolder", JSON.stringify(args))
+  }
+
+  // Open CustomPost Folder
+  function openCustomPostFolder() {
+    let args = {
+      value: true
+    }
+    adsk.fusionSendData("openCustomPostFolder", JSON.stringify(args))
+  }
 
   // command log
   function commandLog() {
@@ -152,8 +208,8 @@
     adsk.fusionSendData("dumpEntityPaths", JSON.stringify(args))
   }
 
-  // Dump Active Command Resource Folder
-  function dumpResourceFolder() {
+  // Open Active Command Resource Folder
+  function openResourceFolder() {
     let args = {
       value: true
     }

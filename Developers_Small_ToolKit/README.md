@@ -32,10 +32,16 @@
 - Remove Custom Graphics: 全てのカスタムグラフィックスを削除します。
 - Command Logging: 実行されたコマンド名とコマンドIDを出力します。
     - Panel Information: コマンドのログと共にパネル情報を出力しますが、現在は正しくない情報を出力する可能性もあります。
-- Clear: 出力先をクリアします。
+- Window Clear: 出力先をクリアします。
 - Dump CommandDialog Info: 表示されているコマンドダイアログ情報を出力します。
 - Dump Entity Paths: 選択されているエンティティIDを出力します。(テキストコマンド用)
-- Dump Active Command Resource Folder: コマンドダイアログのリソースフォルダパスを出力します。
+
+- Open Cache Folder: ローカルキャッシュフォルダーを開きます。
+- Open User Directory: ユーザーディレクトリーを開きます。
+  - 'JSLoadedScriptsinfo'　が、登録されたスクリプト/アドイン管理ファイルです。
+- Open Active Command Resource Folder: 実行中のコマンドダイアログのリソースフォルダを開きます。
+- Open CustomPost Folder: カスタムされた製造ポストファイル(cps)のフォルダーを開きます。
+- Open InstallPost Folder: インストールされた製造ポストファイル(cps)のフォルダーを開きます。
 
 ## 注意 ：
 

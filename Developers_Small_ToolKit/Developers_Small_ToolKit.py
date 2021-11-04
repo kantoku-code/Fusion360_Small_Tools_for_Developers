@@ -4,6 +4,10 @@ import adsk.fusion
 import traceback
 import json
 import math
+import pathlib
+import subprocess
+import os
+import platform
 
 handlers = []
 _app: adsk.core.Application = None
@@ -186,13 +190,107 @@ class MyHTMLEventHandler(adsk.core.HTMLEventHandler):
             elif htmlArgs.action == 'resourceFolder':
                 data = json.loads(htmlArgs.data)
                 if data['value']:
-                    dumpResourceFolder()
+                    openResourceFolder()
 
             elif htmlArgs.action == 'removeCG':
                 data = json.loads(htmlArgs.data)
                 if data['value']:
                     removeCG()
+
+            elif htmlArgs.action == 'openCustomPostFolder':
+                data = json.loads(htmlArgs.data)
+                if data['value']:
+                    openCustomPostFolder()
+
+            elif htmlArgs.action == 'openUserDirectory':
+                data = json.loads(htmlArgs.data)
+                if data['value']:
+                    openUserDirectory()
+
+            elif htmlArgs.action == 'openCache':
+                data = json.loads(htmlArgs.data)
+                if data['value']:
+                    openCache()
+
+            elif htmlArgs.action == 'openInstallPostFolder':
+                data = json.loads(htmlArgs.data)
+                if data['value']:
+                    openInstallPostFolder()
         except:
+            _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+
+def openCache():
+    global _app
+    _app.executeTextCommand(u'Cache.open')
+
+def openUserDirectory():
+    global _app
+    path = _app.executeTextCommand(u'Paths.UserDirectory')
+
+    openFolder(path)
+
+def openResourceFolder():
+    global _app, _ui
+    cmdDef = _ui.commandDefinitions.itemById(_ui.activeCommand)
+    if cmdDef:
+        try:
+            path = cmdDef.resourceFolder
+        except:
+            return
+
+    openFolder(path)
+
+def openInstallPostFolder():
+    global _app, _ui
+    try:
+        tmpPath = getPath('cloudCacheDirectory')
+        if not tmpPath:
+            return
+
+        postPath = pathlib.Path(tmpPath).parent / 'CAM' / 'cache' / 'posts'
+        if not postPath.exists():
+            return
+
+        openFolder(postPath)
+    except:
+        if _ui:
+            _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+
+def openCustomPostFolder():
+    global _app, _ui
+    try:
+        userPath = getPath('unbrandedUserDataDirectory')
+        if not userPath:
+            return
+
+        postPath = pathlib.Path(userPath).parent / 'Fusion 360 CAM' / 'Posts'
+        if not postPath.exists():
+            return
+
+        openFolder(postPath)
+    except:
+        if _ui:
+            _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+
+def getPath(key: str) -> str:
+    global _app
+    try:
+        paths = json.loads(_app.executeTextCommand(u'Paths.Get'))
+        return paths[key]
+
+    except:
+        return None
+
+def openFolder(path: str):
+    global _app, _ui
+    _app.log(str(path))
+    try:
+        if platform.system() == 'Windows':
+            os.startfile(str(path))
+        else:
+            subprocess.check_call(["open", "--", str(path)])
+    except:
+        if _ui:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
 
