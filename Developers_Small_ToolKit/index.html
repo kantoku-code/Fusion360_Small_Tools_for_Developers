@@ -1,228 +1,360 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css"
+    />
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <title>Developers Small ToolKit</title>
+  </head>
 
-  <title>Command Logger</title>
+  <body>
+    <div class="container">
+      <div class="row g-1">
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- close all docs -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              id="closeDocs"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Close All Docs"
+              onclick="closeDocs()"
+            >
+              <i class="bi bi-door-closed"></i>
+            </button>
 
-</head>
-
-<body>
-  <div class="container">
-    <div class="row g-1">
-      <div class="col-12">
-        <div class="p-1 border bg-light">
-          <!-- close all docs -->
-          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" id="closeDocs"
-            data-bs-toggle="tooltip" data-bs-placement="top" title="Close All Docs" onclick="closeDocs()">
-            <i class="bi bi-door-closed"></i>
-          </button>
-          <!-- remove Custom Graphics -->
-          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" id="closeDocs"
-            data-bs-toggle="tooltip" data-bs-placement="top" title="Remove Custom Graphics" onclick="removeCG()">
-            <i class="bi bi-eraser"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="col-12">
-        <div class="p-1 border bg-light">
-          <!-- command log -->
-          <div class="form-check form-switch customSwitch">
-            <input class="form-check-input btn-outline-secondary" type="checkbox" id="cmdLog" onchange="commandLog()">
-            <label class="form-check-label btn-outline-secondary" for="cmdLog">Command Logging</label>
+            <!-- remove Custom Graphics -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              id="closeDocs"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Remove Custom Graphics"
+              onclick="removeCG()"
+            >
+              <i class="bi bi-eraser"></i>
+            </button>
+            |
+            <!-- Export TxtCmd List -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Export TextCommands List"
+              onclick="ExportTxtCmdLst()"
+            >
+              <i class="bi bi-save"></i>
+            </button>
           </div>
+        </div>
 
-          <!-- panel info -->
-          <div class="form-check form-switch customSwitch" id="pnlInfoSet" hidden="false">
-            <input class="form-check-input btn-outline-secondary" type="checkbox" id="pnlInfo" onchange="panelInfo()">
-            <label class="form-check-label btn-outline-secondary" for="pnlInfo">Panel Information</label>
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- Open CustomPost Folder -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Open CustomPost Folder"
+              onclick="openCustomPostFolder()"
+            >
+              <i class="bi bi-gear"></i>
+            </button>
+
+            <!-- Open InstallPost Folder -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Open InstallPost Folder"
+              onclick="openInstallPostFolder()"
+            >
+              <i class="bi bi-gear-fill"></i>
+            </button>
+
+            <!-- Open InstallPost Folder -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Open Post Library WebSite"
+              onClick="openPostLibraryWebSite()"
+            >
+              <i class="bi bi-arrow-up-right-square"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- command log -->
+            <div class="form-check form-switch customSwitch">
+              <input
+                class="form-check-input btn-outline-secondary"
+                type="checkbox"
+                id="cmdLog"
+                onchange="commandLog()"
+              />
+              <label class="form-check-label btn-outline-secondary" for="cmdLog"
+                >Command Logging</label
+              >
+            </div>
+
+            <!-- panel info -->
+            <div
+              class="form-check form-switch customSwitch"
+              id="pnlInfoSet"
+              hidden="false"
+            >
+              <input
+                class="form-check-input btn-outline-secondary"
+                type="checkbox"
+                id="pnlInfo"
+                onchange="panelInfo()"
+              />
+              <label
+                class="form-check-label btn-outline-secondary"
+                for="pnlInfo"
+                >Panel Information</label
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- Window Clear -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Window Clear"
+              onclick="windowClear()"
+            >
+              <i class="bi bi-eraser-fill"></i>
+            </button>
+
+            <!-- Dump CommandDialog Info -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Dump CommandDialog Info"
+              onclick="dumpCommandDialog()"
+            >
+              <i class="bi bi-printer"></i>
+            </button>
+
+            <!-- Dump Entity Paths -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Dump Entity Paths"
+              onclick="dumpEntityPaths()"
+            >
+              <i class="bi bi-pencil-fill"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- Open Cache Folder -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Open Cache Folder"
+              onclick="openCache()"
+            >
+              <i class="bi bi-bag"></i>
+            </button>
+
+            <!-- Open UserDirectory -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Open User Directory"
+              onclick="openUserDirectory()"
+            >
+              <i class="bi bi-person-fill"></i>
+            </button>
+
+            <!-- Open Active Command Resource Folder -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Open Active Command Resource Folder"
+              onclick="openResourceFolder()"
+            >
+              <i class="bi bi-command"></i>
+            </button>
           </div>
         </div>
       </div>
-
-      <div class="col-12">
-        <div class="p-1 border bg-light">
-          <!-- Window Clear -->
-          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="Window Clear" onclick="windowClear()">
-            <i class="bi bi-eraser-fill"></i>
-          </button>
-
-          <!-- Dump CommandDialog Info -->
-          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="Dump CommandDialog Info" onclick="dumpCommandDialog()">
-            <i class="bi bi-printer"></i>
-          </button>
-          <!-- Dump Entity Paths -->
-          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="Dump Entity Paths" onclick="dumpEntityPaths()">
-            <i class="bi bi-pencil-fill"></i>
-          </button>
-       
-        </div>
-      </div>
-
-      <div class="col-12">
-        <div class="p-1 border bg-light">
-          <!-- Open Cache Folder -->
-          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="Open Cache Folder" onclick="openCache()">
-            <i class="bi bi-bag"></i>
-          </button>
-
-          <!-- Open UserDirectory -->
-          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="Open User Directory" onclick="openUserDirectory()">
-            <i class="bi bi-person-fill"></i>
-          </button>
-
-          <!-- Open Active Command Resource Folder -->
-          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="Open Active Command Resource Folder" onclick="openResourceFolder()">
-            <i class="bi bi-command"></i>
-          </button>
-          |
-          <!-- Open CustomPost Folder -->
-          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="Open CustomPost Folder" onclick="openCustomPostFolder()">
-            <i class="bi bi-gear"></i>
-          </button>
-
-          <!-- Open InstallPost Folder -->
-          <button class="btn btn-outline-secondary btn-sm customBtn" type="button" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="Open InstallPost Folder" onclick="openInstallPostFolder()">
-            <i class="bi bi-gear-fill"></i>
-          </button>
-        </div>
-      </div>
-
-
     </div>
-  </div>
 
-  <!-- JavaScriptを使用する場合 -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"
-    integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl"
-    crossorigin="anonymous"></script>
+    <!-- JavaScriptを使用する場合 -->
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"
+      integrity="sha384-DBjhmceckmzwrnMMrjI7BvG2FmRuxQVaTfFYHgfnrdfqMhxKt445b7j3KBQLolRl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 
-</body>
-
-<script>
-
-  // Open Cache Folder
-  function openCache() {
-    let args = {
-      value: true
-    }
-    adsk.fusionSendData("openCache", JSON.stringify(args))
-  }
-
-  // Open UserDirector
-  function openUserDirectory() {
-    let args = {
-      value: true
-    }
-    adsk.fusionSendData("openUserDirectory", JSON.stringify(args))
-  }
-
-  // Open InstallPost Folder
-  function openInstallPostFolder() {
-    let args = {
-      value: true
-    }
-    adsk.fusionSendData("openInstallPostFolder", JSON.stringify(args))
-  }
-
-  // Open CustomPost Folder
-  function openCustomPostFolder() {
-    let args = {
-      value: true
-    }
-    adsk.fusionSendData("openCustomPostFolder", JSON.stringify(args))
-  }
-
-  // command log
-  function commandLog() {
-    let elmCmdLog = document.getElementById("cmdLog")
-    let elmPnlInfo = document.getElementById("pnlInfoSet")
-
-    if (elmCmdLog.checked) {
-      elmPnlInfo.hidden = false
-    } else {
-      elmPnlInfo.hidden = true
+  <script>
+    // Export TxtCmd List
+    function ExportTxtCmdLst() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("ExportTxtCmdLst", JSON.stringify(args));
     }
 
-    let args = {
-      value: elmCmdLog.checked
+    // Open Post Library WebSite
+    function openPostLibraryWebSite() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("openPostLibraryWebSite", JSON.stringify(args));
     }
-    adsk.fusionSendData("cmdLog", JSON.stringify(args))
-  }
 
-  // panel info
-  function panelInfo() {
-    let elmPnlInfo = document.getElementById("pnlInfo")
-
-    let args = {
-      value: elmPnlInfo.checked
+    // Open Cache Folder
+    function openCache() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("openCache", JSON.stringify(args));
     }
-    adsk.fusionSendData("panelInfo", JSON.stringify(args))
-  }
 
-  // close all docs
-  function closeDocs() {
-    let args = {
-      value: true
+    // Open UserDirector
+    function openUserDirectory() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("openUserDirectory", JSON.stringify(args));
     }
-    adsk.fusionSendData("closeDocs", JSON.stringify(args))
-  }
 
-  // TextCommands Pallet Clear
-  function windowClear() {
-    let args = {
-      value: true
+    // Open InstallPost Folder
+    function openInstallPostFolder() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("openInstallPostFolder", JSON.stringify(args));
     }
-    adsk.fusionSendData("windowClear", JSON.stringify(args))
-  }
 
-  // Dump CommandDialog Info
-  function dumpCommandDialog() {
-    let args = {
-      value: true
+    // Open CustomPost Folder
+    function openCustomPostFolder() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("openCustomPostFolder", JSON.stringify(args));
     }
-    adsk.fusionSendData("dumpCommandDialog", JSON.stringify(args))
-  }
 
-  // Dump Entity Paths
-  function dumpEntityPaths() {
-    let args = {
-      value: true
+    // command log
+    function commandLog() {
+      let elmCmdLog = document.getElementById("cmdLog");
+      let elmPnlInfo = document.getElementById("pnlInfoSet");
+
+      if (elmCmdLog.checked) {
+        elmPnlInfo.hidden = false;
+      } else {
+        elmPnlInfo.hidden = true;
+      }
+
+      let args = {
+        value: elmCmdLog.checked,
+      };
+      adsk.fusionSendData("cmdLog", JSON.stringify(args));
     }
-    adsk.fusionSendData("dumpEntityPaths", JSON.stringify(args))
-  }
 
-  // Open Active Command Resource Folder
-  function openResourceFolder() {
-    let args = {
-      value: true
+    // panel info
+    function panelInfo() {
+      let elmPnlInfo = document.getElementById("pnlInfo");
+
+      let args = {
+        value: elmPnlInfo.checked,
+      };
+      adsk.fusionSendData("panelInfo", JSON.stringify(args));
     }
-    adsk.fusionSendData("resourceFolder", JSON.stringify(args))
-  }
 
-  // Remove Custom Graphics
-  function removeCG() {
-    let args = {
-      value: true
+    // close all docs
+    function closeDocs() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("closeDocs", JSON.stringify(args));
     }
-    adsk.fusionSendData("removeCG", JSON.stringify(args))
-  }
-</script>
 
+    // TextCommands Pallet Clear
+    function windowClear() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("windowClear", JSON.stringify(args));
+    }
+
+    // Dump CommandDialog Info
+    function dumpCommandDialog() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("dumpCommandDialog", JSON.stringify(args));
+    }
+
+    // Dump Entity Paths
+    function dumpEntityPaths() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("dumpEntityPaths", JSON.stringify(args));
+    }
+
+    // Open Active Command Resource Folder
+    function openResourceFolder() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("resourceFolder", JSON.stringify(args));
+    }
+
+    // Remove Custom Graphics
+    function removeCG() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("removeCG", JSON.stringify(args));
+    }
+  </script>
 </html>

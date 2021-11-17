@@ -4,7 +4,6 @@
 
 通常のユーザーにはほぼ無意味な、Fusion360 API 開発者向けの小さな工具箱です。
 
-
 ---
 
 ## インストール :
@@ -21,27 +20,28 @@
 
 ![Alt text](./resources/panel.png)
 
-
-
 各コマンド出力される結果については、ほぼ全てテキストコマンドウィンドウに表示されます。
 
 ![Alt text](./resources/dialog.png)
 
-
 - Close all docs:　開かれているドキュメントを全て**保存せず**閉じます。
 - Remove Custom Graphics: 全てのカスタムグラフィックスを削除します。
-- Command Logging: 実行されたコマンド名とコマンドIDを出力します。
-    - Panel Information: コマンドのログと共にパネル情報を出力しますが、現在は正しくない情報を出力する可能性もあります。
+- Export TextCommands List: TextCommands(txt)のコマンドリストをファイルに保存します。
+
+- Open CustomPost Folder: カスタムされた製造ポストファイル(cps)のフォルダーを開きます。
+- Open InstallPost Folder: インストールされた製造ポストファイル(cps)のフォルダーを開きます。
+- Open Post Library WebSite: Post Library のウェブサイトをブラウザで開きます。
+
+- Command Logging: 実行されたコマンド名とコマンド ID を出力します。
+  - Panel Information: コマンドのログと共にパネル情報を出力しますが、現在は正しくない情報を出力する可能性もあります。
 - Window Clear: 出力先をクリアします。
 - Dump CommandDialog Info: 表示されているコマンドダイアログ情報を出力します。
-- Dump Entity Paths: 選択されているエンティティIDを出力します。(テキストコマンド用)
+- Dump Entity Paths: 選択されているエンティティ ID を出力します。(テキストコマンド用)
 
 - Open Cache Folder: ローカルキャッシュフォルダーを開きます。
 - Open User Directory: ユーザーディレクトリーを開きます。
   - 'JSLoadedScriptsinfo'　が、登録されたスクリプト/アドイン管理ファイルです。
 - Open Active Command Resource Folder: 実行中のコマンドダイアログのリソースフォルダを開きます。
-- Open CustomPost Folder: カスタムされた製造ポストファイル(cps)のフォルダーを開きます。
-- Open InstallPost Folder: インストールされた製造ポストファイル(cps)のフォルダーを開きます。
 
 ## 注意 ：
 

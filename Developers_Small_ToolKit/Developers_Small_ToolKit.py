@@ -8,6 +8,7 @@ import pathlib
 import subprocess
 import os
 import platform
+import webbrowser
 
 handlers = []
 _app: adsk.core.Application = None
@@ -28,9 +29,9 @@ _paletteInfo = {
     'isVisible': True,
     'showCloseButton': True,
     'isResizable': True,
-    'width': 280,
-    'height': 250,
-    'useNewWebBrowser': False,  # True,#
+    'width': 260,
+    'height': 290,
+    'useNewWebBrowser': True,  # False,  #
     'dockingState': None
     # 'dockingState': adsk.core.PaletteDockingStates.PaletteDockStateRight
 }
@@ -216,18 +217,70 @@ class MyHTMLEventHandler(adsk.core.HTMLEventHandler):
                 data = json.loads(htmlArgs.data)
                 if data['value']:
                     openInstallPostFolder()
+
+            elif htmlArgs.action == 'openPostLibraryWebSite':
+                data = json.loads(htmlArgs.data)
+                if data['value']:
+                    openPostLibraryWebSite()
+
+            elif htmlArgs.action == 'ExportTxtCmdLst':
+                data = json.loads(htmlArgs.data)
+                if data['value']:
+                    exportTxtCmdLst()
+
         except:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+
+
+def exportTxtCmdLst():
+    global _app
+
+    path = get_Filepath(f'txt_{_app.version}.txt')
+    if len(path) < 1:
+        return
+
+    txtCmd = u'TextCommands.List /Hidden'
+    data = _app.executeTextCommand(txtCmd)
+    data = data.replace('\r', '')
+
+    with open(path, mode="w", encoding='utf-8') as f:
+        f.write(txtCmd + '\n')
+        f.write(data)
+
+# get save file path
+
+
+def get_Filepath(initialFilename='') -> str:
+    ui: adsk.core.UserInterface = adsk.core.Application.get().userInterface
+
+    dlg: adsk.core.FileDialog = ui.createFileDialog()
+    dlg.title = 'Save File'
+    dlg.isMultiSelectEnabled = False
+    dlg.filter = 'Txt(*.txt)'
+    if len(initialFilename) > 0:
+        dlg.initialFilename = initialFilename
+
+    if dlg.showSave() != adsk.core.DialogResults.DialogOK:
+        return ''
+
+    return dlg.filename
+
+
+def openPostLibraryWebSite():
+    webbrowser.open('https://cam.autodesk.com/hsmposts?')
+
 
 def openCache():
     global _app
     _app.executeTextCommand(u'Cache.open')
+
 
 def openUserDirectory():
     global _app
     path = _app.executeTextCommand(u'Paths.UserDirectory')
 
     openFolder(path)
+
 
 def openResourceFolder():
     global _app, _ui
@@ -239,6 +292,7 @@ def openResourceFolder():
             return
 
     openFolder(path)
+
 
 def openInstallPostFolder():
     global _app, _ui
@@ -256,6 +310,7 @@ def openInstallPostFolder():
         if _ui:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
+
 def openCustomPostFolder():
     global _app, _ui
     try:
@@ -272,6 +327,7 @@ def openCustomPostFolder():
         if _ui:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
+
 def getPath(key: str) -> str:
     global _app
     try:
@@ -280,6 +336,7 @@ def getPath(key: str) -> str:
 
     except:
         return None
+
 
 def openFolder(path: str):
     global _app, _ui
