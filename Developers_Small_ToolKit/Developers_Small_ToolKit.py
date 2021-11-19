@@ -163,6 +163,16 @@ class MyHTMLEventHandler(adsk.core.HTMLEventHandler):
                     _ui.commandStarting.remove(_cmdLogInfo['handler'])
                     _handlers.remove(_cmdLogInfo['handler'])
 
+            elif htmlArgs.action == 'devTools':
+                # dev tools
+                data = json.loads(htmlArgs.data)
+                if data['value']:
+                    app.log('-- start dev tools --')
+                    app.executeTextCommand(u'DevOptions.WebDeveloperExtras /on')
+                else:
+                    app.log('-- stop dev tools --')
+                    app.executeTextCommand(u'DevOptions.WebDeveloperExtras /off')
+
             elif htmlArgs.action == 'panelInfo':
                 # panel info
                 data = json.loads(htmlArgs.data)
@@ -472,6 +482,8 @@ class MyCloseEventHandler(adsk.core.UserInterfaceGeneralEventHandler):
                 _handlers.remove(_cmdLogInfo['handler'])
             except:
                 pass
+            _app.log('-- stop dev tools --')
+            _app.executeTextCommand(u'DevOptions.WebDeveloperExtras /off')
         except:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
@@ -548,6 +560,9 @@ def stop(context):
             _handlers.remove(_cmdLogInfo['handler'])
         except:
             pass
+
+        _app.log('-- stop dev tools --')
+        _app.executeTextCommand(u'DevOptions.WebDeveloperExtras /off')
 
         _app.log(f'Stop addin: {_cmdInfo["name"]}')
     except:
