@@ -145,6 +145,22 @@
 
         <div class="col-12">
           <div class="p-1 border bg-light">
+            <!-- dev tools -->
+            <div class="form-check form-switch customSwitch">
+              <input class="form-check-input btn-outline-secondary" 
+              type="checkbox" 
+              id="devTools" 
+              onchange="devTools()"
+              />
+              <label class="form-check-label btn-outline-secondary" for="devTools">
+                Dev Tools
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
             <!-- Window Clear -->
             <button
               class="btn btn-outline-secondary btn-sm customBtn"
@@ -297,6 +313,15 @@
         value: elmCmdLog.checked,
       };
       adsk.fusionSendData("cmdLog", JSON.stringify(args));
+    }
+
+    // dev tools
+    function devTools(){
+      let elmDevTools = document.getElementById("devTools")
+      let args = {
+        value: elmDevTools.checked
+      }
+      adsk.fusionSendData("devTools", JSON.stringify(args))
     }
 
     // panel info
