@@ -33,7 +33,11 @@
 - Open Post Library WebSite: Post Library のウェブサイトをブラウザで開きます。
 
 - Command Logging: 実行されたコマンド名とコマンド ID を出力します。
+
   - Panel Information: コマンドのログと共にパネル情報を出力しますが、現在は正しくない情報を出力する可能性もあります。
+
+- Dev Tools: パネル用デベロップツール
+
 - Window Clear: 出力先をクリアします。
 - Dump CommandDialog Info: 表示されているコマンドダイアログ情報を出力します。
 - Dump Entity Paths: 選択されているエンティティ ID を出力します。(テキストコマンド用)
