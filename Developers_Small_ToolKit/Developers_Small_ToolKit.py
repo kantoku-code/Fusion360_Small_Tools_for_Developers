@@ -10,10 +10,11 @@ import os
 import platform
 import webbrowser
 
-handlers = []
+
 _app: adsk.core.Application = None
 _ui: adsk.core.UserInterface = None
 _handlers = []
+_startUp = []
 
 _cmdInfo = {
     'id': 'Developers_Small_ToolKit_Cmd',
@@ -30,10 +31,9 @@ _paletteInfo = {
     'showCloseButton': True,
     'isResizable': True,
     'width': 260,
-    'height': 290,
-    'useNewWebBrowser': True,  # False,  #
-    'dockingState': None
-    # 'dockingState': adsk.core.PaletteDockingStates.PaletteDockStateRight
+    'height': 330,
+    'useNewWebBrowser': True, # False
+    'dockingState': None # adsk.core.PaletteDockingStates.PaletteDockStateRight
 }
 
 # commandLog group
@@ -258,8 +258,6 @@ def exportTxtCmdLst():
         f.write(data)
 
 # get save file path
-
-
 def get_Filepath(initialFilename='') -> str:
     ui: adsk.core.UserInterface = adsk.core.Application.get().userInterface
 
@@ -427,46 +425,50 @@ def closeAllDocs():
     [doc.close(False) for doc in docs[::-1]]
 
 
+def CreatePalette():
+    try:
+        global _ui, _paletteInfo
+
+        palette = _ui.palettes.itemById(_paletteInfo['id'])
+        if palette:
+            palette.deleteMe()
+
+        palette: adsk.core.Palette = _ui.palettes.add(
+            _paletteInfo['id'],
+            _paletteInfo['name'],
+            _paletteInfo['htmlFileURL'],
+            _paletteInfo['isVisible'],
+            _paletteInfo['showCloseButton'],
+            _paletteInfo['isResizable'],
+            _paletteInfo['width'],
+            _paletteInfo['height'],
+            _paletteInfo['useNewWebBrowser'],
+        )
+
+        if _paletteInfo['dockingState']:
+            palette.dockingState = _paletteInfo['dockingState']
+        else:
+            palette.setPosition(1000, 500)
+
+        global _handlers
+        onHTMLEvent = MyHTMLEventHandler()
+        palette.incomingFromHTML.add(onHTMLEvent)
+        _handlers.append(onHTMLEvent)
+
+        onClosed = MyCloseEventHandler()
+        palette.closed.add(onClosed)
+        _handlers.append(onClosed)
+
+    except:
+        _ui.messageBox('Command executed failed: {}'.format(
+            traceback.format_exc()))
+
 class ShowPaletteCommandExecuteHandler(adsk.core.CommandEventHandler):
     def __init__(self):
         super().__init__()
 
     def notify(self, args):
-        try:
-            global _ui, _paletteInfo
-
-            palette = _ui.palettes.itemById(_paletteInfo['id'])
-            if palette:
-                palette.deleteMe()
-
-            palette: adsk.core.Palette = _ui.palettes.add(
-                _paletteInfo['id'],
-                _paletteInfo['name'],
-                _paletteInfo['htmlFileURL'],
-                _paletteInfo['isVisible'],
-                _paletteInfo['showCloseButton'],
-                _paletteInfo['isResizable'],
-                _paletteInfo['width'],
-                _paletteInfo['height'],
-                _paletteInfo['useNewWebBrowser'],
-            )
-
-            if _paletteInfo['dockingState']:
-                palette.dockingState = _paletteInfo['dockingState']
-            else:
-                palette.setPosition(800, 400)
-
-            onHTMLEvent = MyHTMLEventHandler()
-            palette.incomingFromHTML.add(onHTMLEvent)
-            handlers.append(onHTMLEvent)
-
-            onClosed = MyCloseEventHandler()
-            palette.closed.add(onClosed)
-            handlers.append(onClosed)
-
-        except:
-            _ui.messageBox('Command executed failed: {}'.format(
-                traceback.format_exc()))
+        CreatePalette()
 
 
 class MyCloseEventHandler(adsk.core.UserInterfaceGeneralEventHandler):
@@ -494,12 +496,27 @@ class ShowPaletteCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
 
     def notify(self, args):
         try:
+            global _handlers
             command = args.command
             onExecute = ShowPaletteCommandExecuteHandler()
             command.execute.add(onExecute)
-            handlers.append(onExecute)
+            _handlers.append(onExecute)
         except:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+
+
+class MyWorkspaceActivatedHandler(adsk.core.WorkspaceEventHandler):
+    def __init__(self):
+        super().__init__()
+    def notify(self, args):
+        try:
+            CreatePalette()
+
+            global _startUp
+            if len(_startUp) > 0:
+                del _startUp[-1]
+        except:
+            adsk.core.Application.get().log('Failed:\n{}'.format(traceback.format_exc()))
 
 
 def run(context):
@@ -520,9 +537,11 @@ def run(context):
             _cmdInfo['resources']
         )
 
+        # panel
+        global _handlers
         onCommandCreated = ShowPaletteCommandCreatedHandler()
         showPaletteCmdDef.commandCreated.add(onCommandCreated)
-        handlers.append(onCommandCreated)
+        _handlers.append(onCommandCreated)
 
         panel = _ui.allToolbarPanels.itemById('SolidScriptsAddinsPanel')
         cntrl = panel.controls.itemById('showPalette')
@@ -531,8 +550,14 @@ def run(context):
 
         global _cmdLogInfo
         _cmdLogInfo['handler'] = CommandStartingHandler()
-
         _app.log(f'Start addin: {_cmdInfo["name"]}')
+        showPaletteCmdDef.execute()
+
+        # start up
+        global _startUp
+        onWorkspaceActivated = MyWorkspaceActivatedHandler()
+        _ui.workspaceActivated.add(onWorkspaceActivated)
+        _startUp.append(onWorkspaceActivated)
 
     except:
         if _ui:
