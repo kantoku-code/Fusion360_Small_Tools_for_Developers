@@ -1,15 +1,15 @@
 # Fusion360API Python Addin
 import adsk.core
 import adsk.fusion
+import adsk.drawing
 import traceback
 import json
-import math
 import pathlib
 import subprocess
 import os
 import platform
 import webbrowser
-
+import sys
 
 _app: adsk.core.Application = None
 _ui: adsk.core.UserInterface = None
@@ -32,8 +32,8 @@ _paletteInfo = {
     'isResizable': True,
     'width': 260,
     'height': 330,
-    'useNewWebBrowser': True, # False
-    'dockingState': None # adsk.core.PaletteDockingStates.PaletteDockStateRight
+    'useNewWebBrowser': True,  # False
+    'dockingState': adsk.core.PaletteDockingStates.PaletteDockStateRight
 }
 
 # commandLog group
@@ -168,10 +168,12 @@ class MyHTMLEventHandler(adsk.core.HTMLEventHandler):
                 data = json.loads(htmlArgs.data)
                 if data['value']:
                     app.log('-- start dev tools --')
-                    app.executeTextCommand(u'DevOptions.WebDeveloperExtras /on')
+                    app.executeTextCommand(
+                        u'DevOptions.WebDeveloperExtras /on')
                 else:
                     app.log('-- stop dev tools --')
-                    app.executeTextCommand(u'DevOptions.WebDeveloperExtras /off')
+                    app.executeTextCommand(
+                        u'DevOptions.WebDeveloperExtras /off')
 
             elif htmlArgs.action == 'panelInfo':
                 # panel info
@@ -258,6 +260,8 @@ def exportTxtCmdLst():
         f.write(data)
 
 # get save file path
+
+
 def get_Filepath(initialFilename='') -> str:
     ui: adsk.core.UserInterface = adsk.core.Application.get().userInterface
 
@@ -422,7 +426,12 @@ def closeAllDocs():
     ) == adsk.core.DialogResults.DialogOK:
         return
 
-    [doc.close(False) for doc in docs[::-1]]
+    # [doc.close(False) for doc in docs[::-1]]
+    for doc in docs[::-1]:
+        try:
+            doc.close(False)
+        except:
+            pass
 
 
 def CreatePalette():
@@ -462,6 +471,7 @@ def CreatePalette():
     except:
         _ui.messageBox('Command executed failed: {}'.format(
             traceback.format_exc()))
+
 
 class ShowPaletteCommandExecuteHandler(adsk.core.CommandEventHandler):
     def __init__(self):
@@ -508,6 +518,7 @@ class ShowPaletteCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
 class MyWorkspaceActivatedHandler(adsk.core.WorkspaceEventHandler):
     def __init__(self):
         super().__init__()
+
     def notify(self, args):
         try:
             CreatePalette()
@@ -548,9 +559,13 @@ def run(context):
         if not cntrl:
             panel.controls.addCommand(showPaletteCmdDef)
 
+        # dump info
         global _cmdLogInfo
         _cmdLogInfo['handler'] = CommandStartingHandler()
         _app.log(f'Start addin: {_cmdInfo["name"]}')
+        _app.log(f'  Fusion360 Ver{_app.version}')
+        _app.log(f'  Python Ver{sys.version}')
+
         showPaletteCmdDef.execute()
 
         # start up

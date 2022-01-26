@@ -6,7 +6,7 @@
 	"description":	{
 		"":	"A small ToolKit for developers of the Fusion360 API."
 	},
-	"version":	"0.0.5",
+	"version":	"0.0.6",
 	"runOnStartup":	true,
 	"supportedOS":	"windows|mac",
 	"editEnabled":	true
