@@ -147,12 +147,16 @@
           <div class="p-1 border bg-light">
             <!-- dev tools -->
             <div class="form-check form-switch customSwitch">
-              <input class="form-check-input btn-outline-secondary" 
-              type="checkbox" 
-              id="devTools" 
-              onchange="devTools()"
+              <input
+                class="form-check-input btn-outline-secondary"
+                type="checkbox"
+                id="devTools"
+                onchange="devTools()"
               />
-              <label class="form-check-label btn-outline-secondary" for="devTools">
+              <label
+                class="form-check-label btn-outline-secondary"
+                for="devTools"
+              >
                 Dev Tools
               </label>
             </div>
@@ -238,6 +242,34 @@
             </button>
           </div>
         </div>
+
+        <div class="col-12">
+          <div class="p-1 border bg-light">
+            <!-- Dump Document Attributes -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Dump Document Attributes"
+              onclick="dumpDocAttrs()"
+            >
+              <i class="bi bi-text-left"></i>
+            </button>
+
+            <!-- Remove Document Attributes -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Remove Document Attributes"
+              onclick="removeDocAttrs()"
+            >
+              <i class="bi bi-file-earmark-x"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -250,6 +282,22 @@
   </body>
 
   <script>
+    // Dump Document Attributes
+    function dumpDocAttrs() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("dumpDocAttrs", JSON.stringify(args));
+    }
+
+    // Remove Document Attributes
+    function removeDocAttrs() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("removeDocAttrs", JSON.stringify(args));
+    }
+
     // Export TxtCmd List
     function ExportTxtCmdLst() {
       let args = {
@@ -316,12 +364,12 @@
     }
 
     // dev tools
-    function devTools(){
-      let elmDevTools = document.getElementById("devTools")
+    function devTools() {
+      let elmDevTools = document.getElementById("devTools");
       let args = {
-        value: elmDevTools.checked
-      }
-      adsk.fusionSendData("devTools", JSON.stringify(args))
+        value: elmDevTools.checked,
+      };
+      adsk.fusionSendData("devTools", JSON.stringify(args));
     }
 
     // panel info

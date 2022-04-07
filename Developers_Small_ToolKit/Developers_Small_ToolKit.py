@@ -32,7 +32,7 @@ _paletteInfo = {
     'isResizable': True,
     'width': 260,
     'height': 330,
-    'useNewWebBrowser': True,  # False
+    'useNewWebBrowser': True, # False
     'dockingState': adsk.core.PaletteDockingStates.PaletteDockStateRight
 }
 
@@ -168,12 +168,10 @@ class MyHTMLEventHandler(adsk.core.HTMLEventHandler):
                 data = json.loads(htmlArgs.data)
                 if data['value']:
                     app.log('-- start dev tools --')
-                    app.executeTextCommand(
-                        u'DevOptions.WebDeveloperExtras /on')
+                    app.executeTextCommand(u'DevOptions.WebDeveloperExtras /on')
                 else:
                     app.log('-- stop dev tools --')
-                    app.executeTextCommand(
-                        u'DevOptions.WebDeveloperExtras /off')
+                    app.executeTextCommand(u'DevOptions.WebDeveloperExtras /off')
 
             elif htmlArgs.action == 'panelInfo':
                 # panel info
@@ -240,8 +238,62 @@ class MyHTMLEventHandler(adsk.core.HTMLEventHandler):
                 if data['value']:
                     exportTxtCmdLst()
 
+            elif htmlArgs.action == 'dumpDocAttrs':
+                data = json.loads(htmlArgs.data)
+                if data['value']:
+                    dumpDocAttrs()
+
+            elif htmlArgs.action == 'removeDocAttrs':
+                data = json.loads(htmlArgs.data)
+                if data['value']:
+                    removeDocAttrs()
+
         except:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+
+def dumpDocAttrs():
+    global _app
+
+    doc: adsk.fusion.FusionDocument = _app.activeDocument
+    attrs: adsk.core.Attributes = doc.attributes
+
+    _app.log('TextCommandWindow.Clear')
+    _app.log('-- Remove Document Attributes --')
+    _app.log(f'before count:{attrs.count}')
+    attr: adsk.core.Attribute
+    for gpName in attrs.groupNames:
+        _app.log(f'GroupName : {gpName}')
+        for attr in attrs.itemsByGroup(gpName):
+            attr.deleteMe()
+    _app.log(f'after count:{attrs.count}')
+
+def removeDocAttrs():
+    global _app
+
+    doc: adsk.fusion.FusionDocument = _app.activeDocument
+    attrs: adsk.core.Attributes = doc.attributes
+
+    # Query
+    ui: adsk.core.UserInterface = _app.userInterface
+    msg = f'There are {attrs.count} attributes. Do you want to delete them all?'
+    res = ui.messageBox(
+        msg,
+        '',
+        adsk.core.MessageBoxButtonTypes.YesNoButtonType,
+        adsk.core.MessageBoxIconTypes.WarningIconType
+    )
+    if res == adsk.core.DialogResults.DialogNo:
+        return
+
+    _app.log('TextCommandWindow.Clear')
+    _app.log('-- Remove Document Attributes --')
+    _app.log(f'before count:{attrs.count}')
+    attr: adsk.core.Attribute
+    for gpName in attrs.groupNames:
+        _app.log(f'GroupName : {gpName}')
+        for attr in attrs.itemsByGroup(gpName):
+            attr.deleteMe()
+    _app.log(f'after count:{attrs.count}')
 
 
 def exportTxtCmdLst():
@@ -260,8 +312,6 @@ def exportTxtCmdLst():
         f.write(data)
 
 # get save file path
-
-
 def get_Filepath(initialFilename='') -> str:
     ui: adsk.core.UserInterface = adsk.core.Application.get().userInterface
 
@@ -434,6 +484,7 @@ def closeAllDocs():
             pass
 
 
+
 def CreatePalette():
     try:
         global _ui, _paletteInfo
@@ -471,7 +522,6 @@ def CreatePalette():
     except:
         _ui.messageBox('Command executed failed: {}'.format(
             traceback.format_exc()))
-
 
 class ShowPaletteCommandExecuteHandler(adsk.core.CommandEventHandler):
     def __init__(self):
@@ -518,7 +568,6 @@ class ShowPaletteCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
 class MyWorkspaceActivatedHandler(adsk.core.WorkspaceEventHandler):
     def __init__(self):
         super().__init__()
-
     def notify(self, args):
         try:
             CreatePalette()
