@@ -258,14 +258,14 @@ def dumpDocAttrs():
     attrs: adsk.core.Attributes = doc.attributes
 
     _app.log('TextCommandWindow.Clear')
-    _app.log('-- Remove Document Attributes --')
+    _app.log('-- Dump Document Attributes --')
     _app.log(f'before count:{attrs.count}')
     attr: adsk.core.Attribute
     for gpName in attrs.groupNames:
         _app.log(f'GroupName : {gpName}')
         for attr in attrs.itemsByGroup(gpName):
-            attr.deleteMe()
-    _app.log(f'after count:{attrs.count}')
+            _app.log(f'  {attr.name}:{attr.value}')
+
 
 def removeDocAttrs():
     global _app

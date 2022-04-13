@@ -15,7 +15,7 @@ TextCommandsリスト。
 
 ### アクション:
 以下の環境で確認しています。
- + Fusion360 Ver2.0.11415
+ + Fusion360 Ver2.0.12670
  + Windows10 64bit Pro , Home
 
 ### ライセンス:
