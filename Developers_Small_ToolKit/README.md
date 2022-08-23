@@ -27,7 +27,7 @@
 
 ![Alt text](./resources/dialog.png)
 
-- Close all docs:　開かれているドキュメントを全て**保存せず**閉じます。
+- Close all docs: 開かれているドキュメントで変更の無いものは先に閉じ、残り全て**保存せず**閉じます。
 - Remove Custom Graphics: 全てのカスタムグラフィックスを削除します。
 - Export TextCommands List: TextCommands(txt)のコマンドリストをファイルに保存します。
 
@@ -44,6 +44,7 @@
 - Window Clear: 出力先をクリアします。
 - Dump CommandDialog Info: 表示されているコマンドダイアログ情報を出力します。
 - Dump Entity Paths: 選択されているエンティティ ID を出力します。(テキストコマンド用)
+- Dump Entity Props: 選択されているエンティティのプロパティを出力します。(テキストコマンド用)
 
 - Open Cache Folder: ローカルキャッシュフォルダーを開きます。
 - Open User Directory: ユーザーディレクトリーを開きます。
@@ -60,7 +61,7 @@
 
 以下の環境で確認しています。
 
-- Fusion360 Ver2.0.12670
+- Fusion360 Ver2.0.13881
 - Windows10 64bit Pro , Home
 
 ## ライセンス :

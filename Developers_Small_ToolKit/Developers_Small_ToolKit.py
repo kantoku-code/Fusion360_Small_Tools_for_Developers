@@ -198,6 +198,11 @@ class MyHTMLEventHandler(adsk.core.HTMLEventHandler):
                 if data['value']:
                     dumpEntityPaths()
 
+            elif htmlArgs.action == 'dumpEntityProps':
+                data = json.loads(htmlArgs.data)
+                if data['value']:
+                    dumpEntityProps()
+
             elif htmlArgs.action == 'resourceFolder':
                 data = json.loads(htmlArgs.data)
                 if data['value']:
@@ -248,8 +253,37 @@ class MyHTMLEventHandler(adsk.core.HTMLEventHandler):
                 if data['value']:
                     removeDocAttrs()
 
+            elif htmlArgs.action == 'dumpUserPrmAttrs':
+                data = json.loads(htmlArgs.data)
+                if data['value']:
+                    dumpUserPrmAttrs()
+
         except:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+
+
+def dumpEntityProps():
+    app: adsk.core.Application = adsk.core.Application.get()
+    sels: adsk.core.Selections = app.userInterface.activeSelections
+
+    if sels.count < 1:
+        app.log('non select')
+        return
+
+    res = app.executeTextCommand(u'Selections.List')
+    paths = res.split()
+    for path in paths:
+        try:
+            ids = path.split(':')
+            app.log(f'PEntity.Properties __ Entity Id:{ids[-1]}')
+            app.log(
+                app.executeTextCommand(
+                    u'PEntity.Properties {}'.format(ids[-1])
+                )
+            )
+        except:
+            pass
+
 
 def dumpDocAttrs():
     global _app
@@ -294,6 +328,27 @@ def removeDocAttrs():
         for attr in attrs.itemsByGroup(gpName):
             attr.deleteMe()
     _app.log(f'after count:{attrs.count}')
+
+
+def dumpUserPrmAttrs() -> None:
+    app: adsk.core.Application = adsk.core.Application.get()
+    prms: adsk.fusion.UserParameters = app.activeDocument.design.userParameters
+
+    _app.log('TextCommandWindow.Clear')
+    _app.log('-- Dump User UserParameter Attributes --')
+    attr: adsk.core.Attribute
+    prm: adsk.fusion.UserParameter
+    for prm in prms:
+        app.log(f'**PrmName:{prm.name}**')
+        for groupName in prm.attributes.groupNames:
+            group = prm.attributes.itemsByGroup(groupName)
+            app.log(f'GroupName:{groupName}')
+            for attr in group:
+                app.log(f'  Name:{attr.name}  ValueSize:{len(attr.value.encode())}')
+
+                dict = json.loads(attr.value)
+                for key in dict.keys():
+                    app.log(f'    {key}:{dict[key]}')
 
 
 def exportTxtCmdLst():
@@ -462,6 +517,20 @@ def windowClear():
 
 def closeAllDocs():
     global _app, _ui
+
+    def closeDocs(docs):
+        for doc in docs[::-1]:
+            try:
+                doc.close(False)
+            except:
+                pass
+
+    # *********
+
+    closeDocs(
+        [doc for doc in _app.documents if not doc.isModified]
+    )
+
     docs = [doc for doc in _app.documents]
     msg = [
         f'The number of open documents is {len(docs)}.',
@@ -476,13 +545,7 @@ def closeAllDocs():
     ) == adsk.core.DialogResults.DialogOK:
         return
 
-    # [doc.close(False) for doc in docs[::-1]]
-    for doc in docs[::-1]:
-        try:
-            doc.close(False)
-        except:
-            pass
-
+    closeDocs(docs)
 
 
 def CreatePalette():

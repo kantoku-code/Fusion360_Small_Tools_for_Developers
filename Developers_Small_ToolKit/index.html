@@ -200,6 +200,18 @@
             >
               <i class="bi bi-pencil-fill"></i>
             </button>
+
+            <!-- Dump Entity Props -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Dump Entity Props"
+              onclick="dumpEntityProps()"
+            >
+              <i class="bi bi-file-ppt"></i>
+            </button>
           </div>
         </div>
 
@@ -268,6 +280,18 @@
             >
               <i class="bi bi-file-earmark-x"></i>
             </button>
+
+            <!-- Dump User UserParameter Attributes -->
+            <button
+              class="btn btn-outline-secondary btn-sm customBtn"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Dump UserUserParameter Attributes"
+              onclick="dumpUserPrmAttrs()"
+            >
+              <i class="bi bi-text-left"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -296,6 +320,14 @@
         value: true,
       };
       adsk.fusionSendData("removeDocAttrs", JSON.stringify(args));
+    }
+
+    // Dump User UserParameter Attributes
+    function dumpUserPrmAttrs() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("dumpUserPrmAttrs", JSON.stringify(args));
     }
 
     // Export TxtCmd List
@@ -412,6 +444,14 @@
         value: true,
       };
       adsk.fusionSendData("dumpEntityPaths", JSON.stringify(args));
+    }
+
+    // Dump Entity Props
+    function dumpEntityProps() {
+      let args = {
+        value: true,
+      };
+      adsk.fusionSendData("dumpEntityProps", JSON.stringify(args));
     }
 
     // Open Active Command Resource Folder
